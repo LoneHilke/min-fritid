@@ -1,0 +1,98 @@
+{% extends 'fritid/base.html' %}
+
+{% block content %}
+<div class="container mb-5">
+    <div class="row justify-content-center mt-1">
+        <div class="col-md-12 col-sm-12 p-4">
+            <form method="POST">
+                {% csrf_token %}
+                <div class="pt-5">
+                    {% for perle in perler %}
+                    <div class="row">
+                        <div class="col-md-2 col-sm-12">
+                            <img class="rounded" src="{{ perle.image.url }}" width="150" height="100"/>
+                        </div>
+                        <div class="col-md-8 col-sm-12">
+                            <div class="d-flex flex-row">
+                                <div class="form-group form-check">
+                                    <input type="checkbox" name="items[]" class="form-check-input" value="{{ perle.pk }}">
+                                    <label class="form-check-label">{{ perle.name }}</label>
+                                </div>
+                                <p class="font-weight-bold pl-5">{{ perle.price }}</p>
+                            </div>
+                            <p>{{ perle.description }}</p>
+                        </div>
+                    </div>
+                    <hr />
+                {% endfor %}
+                </div>
+
+                <div class="pt-5">
+                    {% for kniplinger in knipling %}
+                    <div class="row mt-4">
+                        <div class="col-md-2 col-sm-12">
+                            <img class="rounded" src="{{ kniplinger.image.url }}" width="150" height="100"/>
+                        </div>
+                        <div class="col-md-8 col-sm-12">
+                            <div class="d-flex flex-row">
+                                <div class="form-group form-check">
+                                    <input type="checkbox" name="items[]" class="form-check-input" value="{{ kniplinger.pk }}">
+                                    <label class="form-check-label">{{ kniplinger.name }}</label>
+                                </div>
+                                <p class="font-weight-bold pl-5">{{ kniplinger.price }}</p>
+                            </div>
+                            <p>{{ kniplinger.description }}</p>
+                        </div>
+                    </div>
+                    <hr />
+                    {% endfor %}
+                </div>
+
+                <div class="pt-5">
+                    {% for fi in filt %}
+                    <div class="row mt-4">
+                        <div class="col-md-2 col-sm-12">
+                            <img class="rounded" src="{{ fi.image.url }}" width="150" height="100"/>
+                        </div>
+                        <div class="col-md-8 col-sm-12">
+                            <div class="d-flex flex-row">
+                                <div class="form-group form-check">
+                                    <input type="checkbox" name="items[]" class="form-check-input" value="{{ fi.pk }}">
+                                    <label class="form-check-label">{{ fi.name }}</label>
+                                </div>
+                                <p class="font-weight-bold pl-5">{{ fi.price }}</p>
+                            </div>
+                            <p>{{ fi.description }}</p>
+                        </div>
+                    </div>
+                    <hr />
+                    {% endfor %}
+                </div>
+
+                <div class="pt-5">
+                    {% for pap in papir %}
+                    <div class="row mt-4">
+                        <div class="col-md-2 col-sm-12">
+                            <img class="rounded" src="{{ pap.image.url }}" width="150" height="100"/>
+                        </div>
+                        <div class="col-md-8 col-sm-12">
+                            <div class="d-flex flex-row">
+                                <div class="form-group form-check">
+                                    <input type="checkbox" name="items[]" class="form-check-input" value="{{ pap.pk }}">
+                                    <label class="form-check-label">{{ pap.name }}</label>
+                                </div>
+                                <p class="font-weight-bold pl-5">{{ pap.price }}</p>
+                            </div>
+                            <p>{{ pap.description }}</p>
+                        </div>
+                    </div>
+                    <hr />
+                    {% endfor %}
+                </div>
+
+                <button class="btn btn-primary mt-5">Se indhold</button>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock content %}

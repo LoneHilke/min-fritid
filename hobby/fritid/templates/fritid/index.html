@@ -1,0 +1,17 @@
+{% extends 'fritid/base.html' %}
+
+{% block content %}
+<div class="container mb-5">
+    <div class="row justify-content-center mt-5">
+        <div class="col-md-8 col-sm-12 offset-md-1 p-4 text-center">
+            <h1>Fritidsaktiviteter til store og små</h1>
+        </div>
+    </div>
+    <div class="row justify-content-center mt-1">
+        <div class="card col-md-5 col-sm-12 offset-md-1 p-4 text-center">
+            <h2>Håber der er til nogle timers sjov</h2>
+            <a href="{% url 'slags' %}" class="btn btn-outline-success">Kategori</button>
+        </div>
+    </div>
+</div>
+{% endblock content %}
