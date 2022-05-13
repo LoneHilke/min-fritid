@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from django.views import View
-from .models import Hobby, Kategori, SlagsModel
+from .models import Hobby, Kategori, SlagsModel, Kommentar
 
 class Index(View):
     def get(self, request, *args, **kwargs):
@@ -13,16 +13,16 @@ class About(View):
 class Slags(View):
     def get(self, request, *args, **kwargs):
         perler = Hobby.objects.filter(
-            kategori__name__contains='Perler'
+            kategori__titel__contains='Perler'
         )
         knipling = Hobby.objects.filter(
-            kategori__name__contains='Knipling'
+            kategori__titel__contains='Knipling'
         )
         filt = Hobby.objects.filter(
-            kategori__name__contains='Filt'
+            kategori__titel__contains='Filt'
         )
         papir =Hobby.objects.filter(
-            kategori__name__contains='Papir'
+            kategori__titel__contains='Papir'
         )
 
         context = {
@@ -39,31 +39,35 @@ class Slags(View):
             'items': []
         }
 
-        items = request.POST.getlist('items[]')
+        items = request.POST.getlist('items[], images')
 
         for item in items:
             hobby_item = Hobby.objects.get(pk__contains=int(item))
             item_data = {
                 'id': hobby_item.pk,
-                'titel': hobby_item.title,
+                'titel': hobby_item.titel,
                 'pris': hobby_item.pris,
+                'kommentar': hobby_item.kommentar,
             }
 
             slags_items['items'].append(item_data)
 
             pris = 0
-            items_ids = []
+            item_ids = []
 
         for item in slags_items['items']:
             pris += item['pris']
-            items_ids.append(item['id'])
+            item_ids.append(item['id'])
 
-        slags = SlagsModel.objects.create(pris=pris)
-        slags.items.add(*items_ids)
-
+        if pris.is_valid:
+            slags = SlagsModel.objects.create(pris=pris)
+            slags.items.add(*item_ids)
+        
         context = {
             'items': slags_items['items'],
             'pris': pris
         }
+
+        
 
         return render(request, 'fritid/slags_confirmation.html', context)
