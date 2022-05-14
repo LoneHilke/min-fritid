@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.views import View
 from .models import Hobby, Kategori, SlagsModel, Kommentar
 
@@ -35,11 +35,15 @@ class Slags(View):
         return render(request, 'fritid/slags.html', context)
 
     def post(self, request, *args, **kwargs):
+        navn = request.POST.get('navn')
+        email = request.POST.get('email')
+        by = request.POST.get('by')
+
         slags_items = {
             'items': []
         }
 
-        items = request.POST.getlist('items[], images')
+        items = request.POST.getlist('items[]')
 
         for item in items:
             hobby_item = Hobby.objects.get(pk__contains=int(item))
@@ -47,7 +51,7 @@ class Slags(View):
                 'id': hobby_item.pk,
                 'titel': hobby_item.titel,
                 'pris': hobby_item.pris,
-                'kommentar': hobby_item.kommentar,
+                #'kommentar': hobby_item.kommentar,
             }
 
             slags_items['items'].append(item_data)
@@ -59,15 +63,32 @@ class Slags(View):
             pris += item['pris']
             item_ids.append(item['id'])
 
-        if pris.is_valid:
-            slags = SlagsModel.objects.create(pris=pris)
-            slags.items.add(*item_ids)
+        slags = SlagsModel.objects.create(
+            pris=pris, 
+            navn=navn, 
+            email=email, 
+            by=by
+        )
+
+        slags.items.add(*item_ids)
         
         context = {
             'items': slags_items['items'],
             'pris': pris
         }
 
-        
+        return redirect('slags-confirmation', pk=slags.pk)
+
+class SlagsConfirmation(View):
+    def get(self, request, pk, *args, **kwargs):
+        slags = SlagsModel.objects.get(pk=pk)
+
+        context = {
+            'pk': slags.pk,
+            'items': slags.item,
+            'pris': slags.pris
+        }
 
         return render(request, 'fritid/slags_confirmation.html', context)
+
+    

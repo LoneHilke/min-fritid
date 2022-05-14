@@ -1,3 +1,4 @@
+<div class="container">
 <nav class="navbar navbar-expand-lg navbar-dark indigo">
     <a class="navbar-brand" href="{% url 'index' %}">Min fritid</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
@@ -12,10 +13,18 @@
           <a class="nav-link" href="#">menu</a>
         </li>
       </ul>
-      <ul class="navbar-nav">
-        <li class="nav-item">
-          <a class="nav-link" href="{% url 'slags' %}">Kategori</a>
-        </li>
-      </ul>
+    </div>  
+      <div class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle text-info" data-bs-toggle="dropdown" role="button" aria-expanded="false"><i class="fas fa-pen"> kategori</i></a>
+                
+        <ul class="dropdown-menu">
+          <li><a class="dropdown-item" href="#" >Perler</a></li>
+          <li><a class="dropdown-item" href="#" >Knipling</a></li>
+          <li><a class="dropdown-item" href="#" >Filt</a></li>
+          <li><a class="dropdown-item" href="#" >Papir</a></li>
+        </ul>
+                
+      </div>  
     </div>
 </nav>
+</div>
