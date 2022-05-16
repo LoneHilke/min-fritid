@@ -6,7 +6,7 @@ class Hobby(models.Model):
     titel = models.CharField(max_length=50)
     beskrivelse = models.TextField()
     kategori = models.ManyToManyField('Kategori', related_name='item')
-    img = models.ImageField(upload_to='menu_images/')
+    image = models.ImageField(upload_to='menu_images/')
     tilbehør = models.TextField(max_length=100)
     link1 = models.URLField(blank=True, null=True)
     link2 = models.URLField(blank=True, null=True)
